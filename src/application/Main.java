@@ -25,13 +25,13 @@ public class Main extends Application {
   public class TestDB {
     public static void main(String[] args) {
       String url = "jdbc:postgresql://localhost:5432/sql-laba5";
-      String username = "admin_user"; // Проверь, что этот логин верный!
-      String password = "admin123";   // Проверь, что пароль правильный!
+      String username = "admin_user"; 
+      String password = "admin123";  
   
       try (Connection conn = DriverManager.getConnection(url, username, password)) {
-        System.out.println("✅ Подключение успешно!");
+        System.out.println("Подключение успешно!");
       } catch (SQLException e) {
-        System.out.println("❌ Ошибка подключения!");
+        System.out.println("Ошибка подключения!");
         e.printStackTrace();
       }
     }
