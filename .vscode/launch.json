@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Запуск JavaFX",
+      "request": "launch",
+      "mainClass": "Main",
+      "vmArgs": "--module-path \"C:/javafx-sdk-23.0.2/lib\" --add-modules javafx.controls,javafx.fxml",
+      "classPaths": [
+        "lib/postgresql-42.7.5.jar",
+        "src",
+        "resources"
+      ]
+    }
+  ]
+}
