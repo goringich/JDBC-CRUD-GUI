@@ -1,81 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!-- Imports for everything you use -->
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainController">
-  <center>
-    <TabPane fx:id="tabPane">
-      <!-- Таб "Просмотр" -->
-      <Tab text="Просмотр">
-        <VBox spacing="10" padding="10">
-          <HBox spacing="10">
-            <TextField fx:id="searchField" promptText="Поиск по названию"/>
-            <Button fx:id="btnSearch" text="Найти" onAction="#handleSearch"/>
-            <Button fx:id="btnRefresh" text="Обновить" onAction="#handleRefresh"/>
-          </HBox>
-          <TableView fx:id="frameworksTable" prefHeight="300">
-            <columns>
-              <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
-              <TableColumn fx:id="colName" text="Название" prefWidth="150"/>
-              <TableColumn fx:id="colType" text="Тип" prefWidth="100"/>
-              <TableColumn fx:id="colDescription" text="Описание" prefWidth="200"/>
-              <TableColumn fx:id="colCreatedAt" text="Создан" prefWidth="150"/>
-            </columns>
-          </TableView>
-        </VBox>
-      </Tab>
-      <!-- Таб "Добавить" -->
-      <Tab text="Добавить">
-        <VBox spacing="10" padding="10">
-          <TextField fx:id="addNameField" promptText="Название"/>
-          <TextField fx:id="addTypeField" promptText="Тип"/>
-          <TextArea fx:id="addDescField" promptText="Описание"/>
-          <Button fx:id="btnAdd" text="Добавить" onAction="#handleAdd"/>
-        </VBox>
-      </Tab>
-      <!-- Таб "Обновить" -->
-      <Tab text="Обновить">
-        <VBox spacing="10" padding="10">
-          <TextField fx:id="updateOldNameField" promptText="Старое название"/>
-          <TextField fx:id="updateNewNameField" promptText="Новое название"/>
-          <TextField fx:id="updateNewTypeField" promptText="Новый тип"/>
-          <TextArea fx:id="updateNewDescField" promptText="Новое описание"/>
-          <Button fx:id="btnUpdate" text="Обновить" onAction="#handleUpdate"/>
-        </VBox>
-      </Tab>
-      <!-- Таб "Удалить" -->
-      <Tab text="Удалить">
-        <VBox spacing="10" padding="10">
-          <TextField fx:id="deleteNameField" promptText="Название для удаления"/>
-          <Button fx:id="btnDelete" text="Удалить" onAction="#handleDelete"/>
-        </VBox>
-      </Tab>
-      <!-- Таб "Управление БД" -->
-      <Tab text="Управление БД">
-        <VBox spacing="10" padding="10">
-          <Button fx:id="btnCreateDB" text="Создать базу" onAction="#handleCreateDB"/>
-          <Button fx:id="btnDropDB" text="Удалить базу" onAction="#handleDropDB"/>
-          <Button fx:id="btnClearTable" text="Очистить таблицу" onAction="#handleClearTable"/>
-        </VBox>
-      </Tab>
-      <!-- Таб "Управление пользователями" -->
-      <Tab text="Управление пользователями">
-        <VBox spacing="10" padding="10">
-          <TextField fx:id="newUserField" promptText="Имя нового пользователя"/>
-          <PasswordField fx:id="newUserPassField" promptText="Пароль"/>
-          <ChoiceBox fx:id="roleChoiceBox"/>
-          <Button fx:id="btnCreateUser" text="Создать пользователя" onAction="#handleCreateUser"/>
-        </VBox>
-      </Tab>
-      <!-- Таб "Логи" -->
-      <Tab text="Логи">
-        <VBox spacing="10" padding="10">
-          <TextArea fx:id="logArea" prefHeight="300" editable="false" wrapText="true"/>
-        </VBox>
-      </Tab>
-    </TabPane>
-  </center>
-</BorderPane>
+<!-- Root element: HBox -->
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController" spacing="10"> <!-- Example: optional padding using Insets -->
+  <padding>
+    <Insets top="10" right="10" bottom="10" left="10" />
+  </padding>
+
+  <!-- Child node: a BorderPane, or any other container you want inside this HBox -->
+  <BorderPane>
+    <center>
+      <!-- For example, a TabPane as the main content -->
+      <TabPane fx:id="tabPane">
+        <tabs>
+          <Tab text="Просмотр">
+            <VBox spacing="10">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+
+              <HBox spacing="10">
+                <TextField fx:id="searchField" promptText="Поиск по названию" />
+                <Button fx:id="btnSearch" text="Найти" onAction="#handleSearch" />
+                <Button fx:id="btnRefresh" text="Обновить" onAction="#handleRefresh" />
+              </HBox>
+
+              <TableView fx:id="frameworksTable" prefHeight="300">
+                <columns>
+                  <TableColumn fx:id="colId" text="ID" prefWidth="50" />
+                  <TableColumn fx:id="colName" text="Название" prefWidth="150" />
+                  <TableColumn fx:id="colType" text="Тип" prefWidth="100" />
+                  <TableColumn fx:id="colDescription" text="Описание" prefWidth="200" />
+                  <TableColumn fx:id="colCreatedAt" text="Создан" prefWidth="150" />
+                </columns>
+              </TableView>
+            </VBox>
+          </Tab>
+
+          <!-- Таб "Добавить" -->
+          <Tab text="Добавить">
+            <VBox spacing="10">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <TextField fx:id="addNameField" promptText="Название" />
+              <TextField fx:id="addTypeField" promptText="Тип" />
+              <TextArea fx:id="addDescField" promptText="Описание" />
+              <Button fx:id="btnAdd" text="Добавить" onAction="#handleAdd" />
+            </VBox>
+          </Tab>
+
+          <!-- Таб "Обновить" -->
+          <Tab text="Обновить">
+            <VBox spacing="10">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <TextField fx:id="updateOldNameField" promptText="Старое название" />
+              <TextField fx:id="updateNewNameField" promptText="Новое название" />
+              <TextField fx:id="updateNewTypeField" promptText="Новый тип" />
+              <TextArea fx:id="updateNewDescField" promptText="Новое описание" />
+              <Button fx:id="btnUpdate" text="Обновить" onAction="#handleUpdate" />
+            </VBox>
+          </Tab>
+
+          <!-- Таб "Удалить" -->
+          <Tab text="Удалить">
+            <VBox spacing="10">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <TextField fx:id="deleteNameField" promptText="Название для удаления" />
+              <Button fx:id="btnDelete" text="Удалить" onAction="#handleDelete" />
+            </VBox>
+          </Tab>
+
+          <!-- Таб "Управление БД" -->
+          <Tab text="Управление БД">
+            <VBox spacing="10">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <Button fx:id="btnCreateDB" text="Создать базу" onAction="#handleCreateDB" />
+              <Button fx:id="btnDropDB" text="Удалить базу" onAction="#handleDropDB" />
+              <Button fx:id="btnClearTable" text="Очистить таблицу" onAction="#handleClearTable" />
+            </VBox>
+          </Tab>
+
+          <!-- Таб "Управление пользователями" -->
+          <Tab text="Управление пользователями">
+            <VBox spacing="10">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <TextField fx:id="newUserField" promptText="Имя нового пользователя" />
+              <PasswordField fx:id="newUserPassField" promptText="Пароль" />
+              <ChoiceBox fx:id="roleChoiceBox" />
+              <Button fx:id="btnCreateUser" text="Создать пользователя" onAction="#handleCreateUser" />
+            </VBox>
+          </Tab>
+
+          <!-- Таб "Логи" -->
+          <Tab text="Логи">
+            <VBox spacing="10">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <TextArea fx:id="logArea" prefHeight="300" editable="false" wrapText="true" />
+            </VBox>
+          </Tab>
+
+        </tabs>
+      </TabPane>
+    </center>
+  </BorderPane>
+</HBox>

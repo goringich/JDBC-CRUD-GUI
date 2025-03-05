@@ -1,3 +1,5 @@
+package application;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +16,19 @@ public class DBService {
   }
 
   public Connection getConnection() throws SQLException {
-    return DriverManager.getConnection(url, username, password);
+    try {
+      System.out.println("🔍 Attempting connection: " + url + " | Username: " + username);
+      Connection conn = DriverManager.getConnection(url, username, password);
+      System.out.println("Connection successful!");
+      return conn;
+    } catch (SQLException e) {
+      System.out.println("Connection failed: " + e.getMessage());
+      throw e; // Throwing error to see full stack trace
+    }
   }
+  
+  
+  
 
   // Создание таблицы (хранимая процедура)
   public void createTable() {
