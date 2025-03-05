@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.sql.*; 
+
 public class Main extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
@@ -19,4 +21,20 @@ public class Main extends Application {
   public static void main(String[] args) {
     launch(args);
   }
+
+  public class TestDB {
+    public static void main(String[] args) {
+      String url = "jdbc:postgresql://localhost:5432/sql-laba5";
+      String username = "admin_user"; // Проверь, что этот логин верный!
+      String password = "admin123";   // Проверь, что пароль правильный!
+  
+      try (Connection conn = DriverManager.getConnection(url, username, password)) {
+        System.out.println("✅ Подключение успешно!");
+      } catch (SQLException e) {
+        System.out.println("❌ Ошибка подключения!");
+        e.printStackTrace();
+      }
+    }
+  }
+  
 }

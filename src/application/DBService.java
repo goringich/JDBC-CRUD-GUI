@@ -8,6 +8,7 @@ public class DBService {
   private String password;
 
   public DBService(String username, String password) {
+    System.out.println("🔍 Логин: " + username + " | Пароль: " + password); // DEBUG
     this.username = username;
     this.password = password;
   }
