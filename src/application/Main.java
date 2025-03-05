@@ -24,7 +24,7 @@ public class Main extends Application {
 
   public class TestDB {
     public static void main(String[] args) {
-      String url = "jdbc:postgresql://localhost:5432/sql-laba5";
+      String url = "jdbc:postgresql://localhost:5432/sql_laba";
       String username = "admin_user"; 
       String password = "admin123";  
   

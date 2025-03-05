@@ -4,15 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import java.sql.*; 
-
-import application.DBService;
-import application.MainController;
-
+import javafx.stage.Stage;
+import java.sql.Connection;
 
 public class LoginController {
   @FXML
@@ -25,45 +21,48 @@ public class LoginController {
     String username = usernameField.getText().trim();
     String password = passwordField.getText().trim();
     DBService dbService = new DBService(username, password);
+
     try (Connection conn = dbService.getConnection()) {
-      // Connection successful, load main window
+      // Загрузка Main.fxml
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/Main.fxml"));
       Parent root = loader.load();
       MainController controller = loader.getController();
       controller.setDBService(dbService);
+
       Stage stage = (Stage) usernameField.getScene().getWindow();
       stage.setScene(new Scene(root));
+      stage.setTitle("Frontend DB - Admin/Guest");
     } catch (Exception e) {
-      System.err.println("Login error: ");
       e.printStackTrace();
       Alert alert = new Alert(Alert.AlertType.ERROR);
-      alert.setTitle("Error");
-      alert.setHeaderText("Unable to log in");
-      alert.setContentText("Please check your credentials and try again.");
+      alert.setTitle("Ошибка авторизации");
+      alert.setHeaderText("Неверные учётные данные или ошибка подключения");
+      alert.setContentText(e.getMessage());
       alert.showAndWait();
     }
   }
 
   @FXML
   private void handleBypassLogin() {
-    // Using preset guest credentials
+    // Например, логин guest
     DBService dbService = new DBService("guest_user", "guest123");
+
     try (Connection conn = dbService.getConnection()) {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/Main.fxml"));
       Parent root = loader.load();
       MainController controller = loader.getController();
       controller.setDBService(dbService);
+
       Stage stage = (Stage) usernameField.getScene().getWindow();
       stage.setScene(new Scene(root));
+      stage.setTitle("Frontend DB - Guest Bypass");
     } catch (Exception e) {
-      System.err.println("Bypass login error: ");
       e.printStackTrace();
       Alert alert = new Alert(Alert.AlertType.ERROR);
-      alert.setTitle("Error");
-      alert.setHeaderText("Unable to log in");
-      alert.setContentText("Please check your credentials and try again.");
+      alert.setTitle("Ошибка гостевого входа");
+      alert.setHeaderText("Невозможно войти как гость");
+      alert.setContentText(e.getMessage());
       alert.showAndWait();
     }
   }
-
 }

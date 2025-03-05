@@ -76,10 +76,8 @@ public class MainController {
   
   public void setDBService(DBService dbService) {
     this.dbService = dbService;
-    // Инициализируем ChoiceBox для ролей
     roleChoiceBox.setItems(FXCollections.observableArrayList("admin", "guest"));
     roleChoiceBox.setValue("guest");
-    // Заполняем таблицу данными
     refreshTable();
   }
 
@@ -104,7 +102,7 @@ public class MainController {
     String type = addTypeField.getText();
     String desc = addDescField.getText();
     dbService.addFramework(name, type, desc);
-    logArea.appendText("Добавлена запись: " + name + "\n");
+    logArea.appendText("Record added: " + name + "\n");
     refreshTable();
   }
 
@@ -114,8 +112,8 @@ public class MainController {
     String newName = updateNewNameField.getText();
     String newType = updateNewTypeField.getText();
     String newDesc = updateNewDescField.getText();
-    dbService.updateFramework(oldName, newName, newType, newDesc);
-    logArea.appendText("Обновлена запись: " + oldName + "\n");
+    int count = dbService.updateFramework(oldName, newName, newType, newDesc);
+    logArea.appendText("Record updated: " + oldName + " (" + count + " row(s) affected)\n");
     refreshTable();
   }
 
@@ -123,26 +121,26 @@ public class MainController {
   private void handleDelete() {
     String name = deleteNameField.getText();
     dbService.deleteFramework(name);
-    logArea.appendText("Удалена запись: " + name + "\n");
+    logArea.appendText("Record deleted: " + name + "\n");
     refreshTable();
   }
 
   @FXML
   private void handleCreateDB() {
     dbService.createDatabase();
-    logArea.appendText("Создана база данных\n");
+    logArea.appendText("Database created\n");
   }
 
   @FXML
   private void handleDropDB() {
     dbService.deleteDatabase();
-    logArea.appendText("База данных удалена\n");
+    logArea.appendText("Database dropped\n");
   }
 
   @FXML
   private void handleClearTable() {
     dbService.clearTable();
-    logArea.appendText("Таблица очищена\n");
+    logArea.appendText("Table cleared\n");
     refreshTable();
   }
 
@@ -152,12 +150,12 @@ public class MainController {
     String newPassword = newUserPassField.getText();
     String role = roleChoiceBox.getValue();
     dbService.createUser(newUsername, newPassword, role);
-    logArea.appendText("Создан пользователь: " + newUsername + " с ролью: " + role + "\n");
+    logArea.appendText("User created: " + newUsername + " with role: " + role + "\n");
   }
 
   @FXML
   private void handleRefresh() {
     refreshTable();
-    logArea.appendText("Данные обновлены\n");
+    logArea.appendText("Data refreshed\n");
   }
 }
