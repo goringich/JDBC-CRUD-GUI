@@ -1,4 +1,5 @@
 package application;
+
 import java.sql.Timestamp;
 
 public class Framework {
@@ -34,5 +35,25 @@ public class Framework {
 
   public Timestamp getCreatedAt() {
     return createdAt;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public void setCreatedAt(Timestamp createdAt) {
+    this.createdAt = createdAt;
   }
 }

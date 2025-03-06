@@ -1,5 +1,6 @@
-import java.sql.*;
+package application;
 
+import java.sql.*;
 
 public class TestDB {
   public static void main(String[] args) {
@@ -20,15 +21,12 @@ public class TestDB {
       int count = 0;
       while (r2.next()) {
         count++;
-        System.out.println("Row: id=" + r2.getInt("id")
-          + ", name=" + r2.getString("name"));
+        System.out.println("Row: id=" + r2.getInt("id") + ", name=" + r2.getString("name"));
       }
-
       ResultSet r3 = st.executeQuery("SELECT * FROM pg_tables WHERE schemaname = 'public'");
       while (r3.next()) {
         System.out.println("Found table: " + r3.getString("tablename"));
       }
-
       System.out.println("Total rows in frameworks: " + count);
     } catch (SQLException e) {
       e.printStackTrace();

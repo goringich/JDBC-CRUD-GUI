@@ -5,14 +5,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBService {
-  private final String url = "jdbc:postgresql://localhost:5432/sql_laba";
+  private final String url = "jdbc:postgresql://localhost:5432/sql_laba?currentSchema=public";
   private String username;
   private String password;
 
   public DBService(String username, String password) {
     this.username = username;
     this.password = password;
+  
+    // Debugging code 
+    try (Connection conn = getConnection()) {
+      System.out.println("Connected to: " + conn.getCatalog());
+      Statement st = conn.createStatement();
+      ResultSet rs = st.executeQuery("SELECT current_user, current_database()");
+      while (rs.next()) {
+        System.out.println("User: " + rs.getString(1) + ", DB: " + rs.getString(2));
+      }
+      
+      // Check if table is visible
+      ResultSet rs2 = st.executeQuery("SELECT * FROM public.frameworks");
+      while (rs2.next()) {
+        System.out.println("Row from frameworks: " + rs2.getInt("id"));
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
   }
+  
 
   public Connection getConnection() throws SQLException {
     return DriverManager.getConnection(url, username, password);
@@ -103,20 +122,29 @@ public class DBService {
     try (Connection conn = getConnection();
          PreparedStatement stmt = conn.prepareStatement("SELECT * FROM get_all_frameworks()")) {
       ResultSet rs = stmt.executeQuery();
+      System.out.println("Fetching frameworks from DB...");
+      
       while (rs.next()) {
-        list.add(new Framework(
+        Framework framework = new Framework(
           rs.getInt("id"),
           rs.getString("name"),
           rs.getString("type"),
           rs.getString("description"),
           rs.getTimestamp("created_at")
-        ));
+        );
+        list.add(framework);
+        System.out.println("Fetched: " + framework.getName());
+      }
+      
+      if (list.isEmpty()) {
+        System.out.println("No frameworks found in database.");
       }
     } catch (SQLException e) {
       System.err.println("Error getAllFrameworks: " + e.getMessage());
     }
     return list;
   }
+  
 
   public void createUser(String newUsername, String newPassword, String role) {
     try (Connection conn = getConnection();
@@ -136,15 +164,6 @@ public class DBService {
       stmt.execute();
     } catch (SQLException e) {
       System.err.println("Error createDatabase: " + e.getMessage());
-    }
-  }
-
-  public void deleteDatabase() {
-    try (Connection conn = getConnection();
-         PreparedStatement stmt = conn.prepareStatement("CALL delete_database()")) {
-      stmt.execute();
-    } catch (SQLException e) {
-      System.err.println("Error deleteDatabase: " + e.getMessage());
     }
   }
 }

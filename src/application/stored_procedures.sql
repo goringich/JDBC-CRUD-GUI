@@ -60,6 +60,8 @@ END $$;
 
 -- Update a record in the "frameworks" table
 DROP FUNCTION IF EXISTS update_framework(TEXT, TEXT, TEXT, TEXT);
+DROP PROCEDURE IF EXISTS update_framework(TEXT, TEXT, TEXT, TEXT);
+
 CREATE OR REPLACE FUNCTION update_framework(p_old_name TEXT, p_new_name TEXT, p_new_type TEXT, p_new_description TEXT)
 RETURNS INT
 LANGUAGE plpgsql
@@ -67,12 +69,13 @@ AS $$
 DECLARE
   row_count INT;
 BEGIN
-  UPDATE public.frameworks
+  UPDATE frameworks
   SET name = p_new_name, type = p_new_type, description = p_new_description
   WHERE name = p_old_name;
   GET DIAGNOSTICS row_count = ROW_COUNT;
   RETURN row_count;
 END $$;
+
 
 -- Delete a record from the "frameworks" table by name
 CREATE OR REPLACE PROCEDURE delete_framework(p_name TEXT)

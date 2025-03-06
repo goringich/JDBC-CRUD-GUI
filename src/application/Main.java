@@ -1,4 +1,4 @@
-package application;  
+package application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,12 +6,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.sql.*; 
-
 public class Main extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Login.fxml"));
+    FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("Main.fxml"));
+    Parent root = loader.load();
+    
+    // Создаём объект базы данных
+    DBService dbService = new DBService("admin_user", "admin123");
+
+    // Получаем контроллер и устанавливаем DBService до вызова refreshTable()
+    MainController controller = loader.getController();
+    controller.setDBService(dbService); // ← ВАЖНО!
 
     primaryStage.setScene(new Scene(root));
     primaryStage.setTitle("Система управления БД");
@@ -21,20 +27,4 @@ public class Main extends Application {
   public static void main(String[] args) {
     launch(args);
   }
-
-  public class TestDB {
-    public static void main(String[] args) {
-      String url = "jdbc:postgresql://localhost:5432/sql_laba";
-      String username = "admin_user"; 
-      String password = "admin123";  
-  
-      try (Connection conn = DriverManager.getConnection(url, username, password)) {
-        System.out.println("Подключение успешно!");
-      } catch (SQLException e) {
-        System.out.println("Ошибка подключения!");
-        e.printStackTrace();
-      }
-    }
-  }
-  
 }

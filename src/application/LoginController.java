@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.sql.Connection;
 
+
 public class LoginController {
   @FXML
   private TextField usernameField;
